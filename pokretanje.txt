@@ -1,0 +1,16 @@
+instaliraj docker i docker compose
+proveri da li imas tako sto uradis docker --version
+instaliraj vue ako nemas
+proveri da li imas sa vue --version
+napravi folder neki za projekat
+iz git basha/terminala se pozicioniras u njega
+git clone git@github.com:milutinzeljkovic/bsep.git .
+cd frontend
+npm install
+cd ..
+cd backend
+docker-compose up -d
+otvoris projekat u intellj
+pokrenes na dugme
+odes nazad u terminal pozicioniras se u frontend folder
+npm run serve

@@ -1,0 +1,10 @@
+Napravi folder negde nazovi kako oces
+Preko git bash/terminala udii u folder
+npm install -g @vue/cli
+git clone git@github.com:milutinzeljkovic/bsep.git .
+instaliraj docker i docker compose ako nemas, proversis tako sto uradis docker --version 
+kad instaliras docker uradis
+docker-compose up -d
+cd fontendnpm install
+pokrenes backend u intellij
+
