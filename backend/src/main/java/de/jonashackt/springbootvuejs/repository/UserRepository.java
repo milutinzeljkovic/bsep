@@ -1,8 +1,7 @@
 package de.jonashackt.springbootvuejs.repository;
 
+import de.jonashackt.springbootvuejs.model.User;
 import org.springframework.data.repository.CrudRepository;
-
-import de.jonashackt.springbootvuejs.domain.*;
 
 // This will be AUTO IMPLEMENTED by Spring into a Bean called userRepository
 // CRUD refers Create, Read, Update, Delete

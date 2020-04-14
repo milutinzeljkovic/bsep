@@ -1,6 +1,6 @@
 package de.jonashackt.springbootvuejs.controller;
 
-import de.jonashackt.springbootvuejs.domain.User;
+import de.jonashackt.springbootvuejs.model.User;
 import de.jonashackt.springbootvuejs.exception.UserNotFoundException;
 import de.jonashackt.springbootvuejs.repository.UserRepository;
 import org.slf4j.Logger;

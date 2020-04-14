@@ -603,7 +603,7 @@ Now you're able to use Spring Data's magic - all you need is an Interface like [
 ```java
 package de.jonashackt.springbootvuejs.repository;
 
-import de.jonashackt.springbootvuejs.domain.User;
+import de.jonashackt.springbootvuejs.model.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
@@ -624,7 +624,7 @@ Now write your Testcases accordingly like [UserRepositoryTest.java](backend/src/
 ```java
 package de.jonashackt.springbootvuejs.repository;
 
-import de.jonashackt.springbootvuejs.domain.User;
+import de.jonashackt.springbootvuejs.model.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

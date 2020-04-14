@@ -1,7 +1,7 @@
 package de.jonashackt.springbootvuejs.controller;
 
 import de.jonashackt.springbootvuejs.SpringBootVuejsApplication;
-import de.jonashackt.springbootvuejs.domain.User;
+import de.jonashackt.springbootvuejs.model.User;
 import io.restassured.RestAssured;
 import org.apache.http.HttpStatus;
 import org.junit.Before;
