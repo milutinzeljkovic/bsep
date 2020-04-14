@@ -6,10 +6,11 @@ import de.jonashackt.springbootvuejs.service.CertificateDetailService;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/certificates")
@@ -31,5 +32,21 @@ public class CertificateController {
         }
         return ResponseEntity.status(201).body(createdCertificateDetail);
     }
+
+    @RequestMapping(path = "", method = RequestMethod.GET)
+    public List<CertificateDetail> getAll(){
+        return certificateDetailService.getAll();
+    }
+
+    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    public Optional<CertificateDetail> getOneById(@PathVariable UUID id){
+        return certificateDetailService.getOneById(id);
+    }
+
+    @RequestMapping(path = "/email/{email}", method = RequestMethod.GET)
+    public Optional<CertificateDetail> getOneByEmail(@PathVariable String email){
+        return certificateDetailService.getOneByEmail(email);
+    }
+
 
 }
