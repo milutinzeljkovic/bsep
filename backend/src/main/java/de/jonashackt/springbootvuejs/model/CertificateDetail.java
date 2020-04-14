@@ -2,6 +2,7 @@ package de.jonashackt.springbootvuejs.model;
 
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,8 +29,10 @@ public class CertificateDetail extends AbstractBaseEntity{
 
     private String country;
 
+    @JsonFormat(pattern = "yyyy/MM/dd")
     private Date startAt;
 
+    @JsonFormat(pattern = "yyyy/MM/dd")
     private Date entAt;
 
     private String organisation;
