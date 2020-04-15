@@ -37,7 +37,7 @@ public class CertificateDetailService implements  ICertificateDetailService {
     }
 
     @Override
-    public Optional<CertificateDetail> getOneByEmail(String email) {
+    public CertificateDetail getOneByEmail(String email) {
         return certificateDetailRepository.findOneByEmail(email);
     }
 }

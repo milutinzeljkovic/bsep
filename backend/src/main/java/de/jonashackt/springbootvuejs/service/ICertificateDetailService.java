@@ -11,5 +11,5 @@ public interface ICertificateDetailService {
     CertificateDetail createCertificateDetail(CertificateDetail certificateDetail);
     List<CertificateDetail> getAll();
     Optional<CertificateDetail> getOneById(UUID id);
-    Optional<CertificateDetail> getOneByEmail(String email);
+    CertificateDetail getOneByEmail(String email);
 }

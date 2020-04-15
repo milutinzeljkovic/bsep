@@ -39,11 +39,8 @@ public class CertificateController {
     }
 
     @RequestMapping(path = "/email/{email}", method = RequestMethod.GET)
-    public Optional<CertificateDetail> getOneByEmail(@PathVariable String email){
+    public CertificateDetail getOneByEmail(@PathVariable String email){
         return certificateDetailService.getOneByEmail(email);
     }
-
-
-
 
 }
