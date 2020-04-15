@@ -34,7 +34,7 @@ public class CertificateDetail extends AbstractBaseEntity{
     private Date startAt;
 
     @JsonFormat(pattern = "yyyy/MM/dd")
-    private Date entAt;
+    private Date endAt;
 
     private String organisation;
 

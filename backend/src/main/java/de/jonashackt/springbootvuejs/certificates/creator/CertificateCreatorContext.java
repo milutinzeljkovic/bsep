@@ -1,11 +1,15 @@
 package de.jonashackt.springbootvuejs.certificates.creator;
 
+import de.jonashackt.springbootvuejs.model.CertificateDetail;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.bouncycastle.operator.OperatorCreationException;
 
+import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.text.ParseException;
 
 @Getter
 @Setter
@@ -15,7 +19,7 @@ public class CertificateCreatorContext {
 
     private ICertificateCreator certificateCreator;
 
-    public X509Certificate createCertificate(String issuerEmailDomain, String subjectEmailDomain){
+    public X509Certificate createCertificate(CertificateDetail issuerEmailDomain, CertificateDetail subjectEmailDomain) throws CertificateException, OperatorCreationException, ParseException {
         return this.certificateCreator.createCertificate(issuerEmailDomain,subjectEmailDomain);
     }
 

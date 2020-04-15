@@ -1,13 +1,17 @@
 package de.jonashackt.springbootvuejs.controller;
 
+import de.jonashackt.springbootvuejs.certificates.creator.CertificateCreatorContext;
+import de.jonashackt.springbootvuejs.certificates.creator.SelfSignedCertificateCreator;
 import de.jonashackt.springbootvuejs.model.CertificateDetail;
 import de.jonashackt.springbootvuejs.repository.CertificateDetailRepository;
 import de.jonashackt.springbootvuejs.service.CertificateDetailService;
 import org.apache.coyote.Response;
+import org.bouncycastle.operator.OperatorCreationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.cert.CertificateException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -41,6 +45,11 @@ public class CertificateController {
     @RequestMapping(path = "/email/{email}", method = RequestMethod.GET)
     public CertificateDetail getOneByEmail(@PathVariable String email){
         return certificateDetailService.getOneByEmail(email);
+    }
+
+    @RequestMapping(path = "/test", method = RequestMethod.GET)
+    public String test(){
+        return  certificateDetailService.test();
     }
 
 }
