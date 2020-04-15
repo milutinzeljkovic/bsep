@@ -19,11 +19,6 @@ public class CertificateController {
     @Autowired
     CertificateDetailService certificateDetailService;
 
-    @RequestMapping(path = "/hello")
-    public String sayHello() {
-        return "Cert controller";
-    }
-
     @PostMapping(path = "")
     public ResponseEntity<CertificateDetail> create(@RequestBody CertificateDetail certificateDetail){
         CertificateDetail createdCertificateDetail = certificateDetailService.createCertificateDetail(certificateDetail);
@@ -47,6 +42,8 @@ public class CertificateController {
     public Optional<CertificateDetail> getOneByEmail(@PathVariable String email){
         return certificateDetailService.getOneByEmail(email);
     }
+
+
 
 
 }

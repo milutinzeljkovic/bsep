@@ -49,4 +49,6 @@ public class CertificateDetail extends AbstractBaseEntity{
     public String getCommonName(){
         return this.givenName + " " + this.surname;
     }
+
+    private boolean isActive;
 }
