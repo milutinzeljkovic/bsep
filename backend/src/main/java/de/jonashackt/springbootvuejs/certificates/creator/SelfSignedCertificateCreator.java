@@ -2,6 +2,7 @@ package de.jonashackt.springbootvuejs.certificates.creator;
 
 import de.jonashackt.springbootvuejs.certificates.helpers.CertificateCreationHelper;
 import de.jonashackt.springbootvuejs.model.CertificateDetail;
+import de.jonashackt.springbootvuejs.model.CertificateWrapper;
 import de.jonashackt.springbootvuejs.repository.CertificateDetailRepository;
 import de.jonashackt.springbootvuejs.service.CertificateDetailService;
 import org.bouncycastle.asn1.x500.X500Name;
@@ -30,7 +31,7 @@ public class SelfSignedCertificateCreator implements ICertificateCreator {
 
 
     @Override
-    public X509Certificate createCertificate(CertificateDetail issuerDetail, CertificateDetail subjectDetail) throws OperatorCreationException, CertificateException, ParseException {
+    public CertificateWrapper createCertificate(CertificateDetail issuerDetail, CertificateDetail subjectDetail) throws OperatorCreationException, CertificateException, ParseException {
         //podaci izdavaca setifikata su u ovom slucaju i podaci subjekta jer je self signed sertifikat
         //builder za potpis
         JcaContentSignerBuilder builder = new JcaContentSignerBuilder("SHA256WithRSAEncryption");
@@ -38,18 +39,17 @@ public class SelfSignedCertificateCreator implements ICertificateCreator {
         KeyPair keyPair = CertificateCreationHelper.generateKeyPair();
         PublicKey publicKey = keyPair.getPublic();
         PrivateKey privateKey = keyPair.getPrivate();
-        X500Name subjectX500Name = CertificateCreationHelper.generateX500Name(issuerDetail);
+        X500Name subjectX500Name = CertificateCreationHelper.generateX500Name(subjectDetail);
         ContentSigner contentSigner = builder.build(keyPair.getPrivate());
         long certificateSerialNumber = System.currentTimeMillis();
 
         SimpleDateFormat iso8601Formater = new SimpleDateFormat("yyyy-MM-dd");
 
-        System.out.println(issuerDetail.getEndAt());
 
         X509v3CertificateBuilder certGen = new JcaX509v3CertificateBuilder(subjectX500Name,
                 new BigInteger(String.valueOf(certificateSerialNumber)),
-                issuerDetail.getStartAt(),
-                issuerDetail.getEndAt(),
+                subjectDetail.getStartAt(),
+                subjectDetail.getEndAt(),
                 subjectX500Name,
                 publicKey);
 
@@ -61,6 +61,9 @@ public class SelfSignedCertificateCreator implements ICertificateCreator {
         System.out.println("==============================================================================");
         System.out.println(certificate);
 
-        return certificate;
+        CertificateWrapper certificateWrapper = new CertificateWrapper();
+        certificateWrapper.setCertificate(certificate);
+        certificateWrapper.setPrivateKey(privateKey);
+        return certificateWrapper;
     }
 }

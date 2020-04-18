@@ -1,6 +1,7 @@
 package de.jonashackt.springbootvuejs.certificates.creator;
 
 import de.jonashackt.springbootvuejs.model.CertificateDetail;
+import de.jonashackt.springbootvuejs.model.CertificateWrapper;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +20,7 @@ public class CertificateCreatorContext {
 
     private ICertificateCreator certificateCreator;
 
-    public X509Certificate createCertificate(CertificateDetail issuerEmailDomain, CertificateDetail subjectEmailDomain) throws CertificateException, OperatorCreationException, ParseException {
+    public CertificateWrapper createCertificate(CertificateDetail issuerEmailDomain, CertificateDetail subjectEmailDomain) throws CertificateException, OperatorCreationException, ParseException {
         return this.certificateCreator.createCertificate(issuerEmailDomain,subjectEmailDomain);
     }
 
