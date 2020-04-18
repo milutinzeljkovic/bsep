@@ -34,19 +34,11 @@ public class EndEntityCertificateCreator implements  ICertificateCreator {
 
         X500Name subjectX500Name = CertificateCreationHelper.generateX500Name(subjectDetail);
         Reader reader = new Reader();
-        PrivateKey privateKeyIssuer = reader.readPrivateKey("root.jks","password",issuerDetail.getEmail(),"milutin");
-        X509Certificate issuer = (X509Certificate) reader.readX509Certificate("root.jks","password",issuerDetail.getEmail());
+        PrivateKey privateKeyIssuer = reader.readPrivateKey("keystore/root.jks","password",issuerDetail.getEmail(),"milutin");
+        X509Certificate issuer = (X509Certificate) reader.readX509Certificate("keystore/root.jks","password",issuerDetail.getEmail());
         X500Name issuerX500Name = new JcaX509CertificateHolder(issuer).getSubject();
-
-        System.out.println("===============issuerx500================");
-        System.out.println(issuerX500Name);
-
         ContentSigner contentSigner = builder.build(privateKeyIssuer);
-
         long certificateSerialNumber = System.currentTimeMillis();
-
-        SimpleDateFormat iso8601Formater = new SimpleDateFormat("yyyy-MM-dd");
-
         X509v3CertificateBuilder certGen = new JcaX509v3CertificateBuilder(issuerX500Name,
                 new BigInteger(String.valueOf(certificateSerialNumber)),
                 subjectDetail.getStartAt(),

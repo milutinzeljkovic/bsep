@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.text.ParseException;
@@ -50,17 +51,17 @@ public class CertificateController {
     }
 
     @RequestMapping(path = "/issue/{email_issuer}/{email_subject}", method = RequestMethod.POST)
-    public CertificateDetail issue(@PathVariable String email_issuer, @PathVariable String email_subject) throws CertificateException, OperatorCreationException, ParseException {
+    public CertificateDetail issue(@PathVariable String email_issuer, @PathVariable String email_subject) throws CertificateException, OperatorCreationException, ParseException, IOException {
         return certificateService.issue(email_issuer,email_subject);
     }
 
     @RequestMapping(path = "/issue/intermediate/{email_issuer}/{email_subject}", method = RequestMethod.POST)
-    public CertificateDetail issueIntermediate(@PathVariable String email_issuer, @PathVariable String email_subject) throws CertificateException, OperatorCreationException, ParseException {
+    public CertificateDetail issueIntermediate(@PathVariable String email_issuer, @PathVariable String email_subject) throws CertificateException, OperatorCreationException, ParseException, IOException {
         return certificateService.issueIntermediate(email_issuer,email_subject);
     }
 
     @RequestMapping(path = "/issue/endentity/{email_issuer}/{email_subject}", method = RequestMethod.POST)
-    public CertificateDetail issueEE(@PathVariable String email_issuer, @PathVariable String email_subject) throws CertificateException, OperatorCreationException, ParseException {
+    public CertificateDetail issueEE(@PathVariable String email_issuer, @PathVariable String email_subject) throws CertificateException, OperatorCreationException, ParseException, IOException {
         return certificateService.issueEE(email_issuer,email_subject);
     }
 
