@@ -12,5 +12,6 @@ public interface ICertificateService {
 
     CertificateDetail issue(String emailIssuer, String emailSubject) throws CertificateException, OperatorCreationException, ParseException;
     CertificateDetail issueIntermediate(String emailIssuer, String emailSubject) throws CertificateException, OperatorCreationException, ParseException;
+    CertificateDetail issueEE(String emailIssuer, String emailSubject) throws CertificateException, OperatorCreationException, ParseException;
 
 }

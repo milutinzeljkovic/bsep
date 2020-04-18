@@ -1,6 +1,7 @@
 package de.jonashackt.springbootvuejs.certificates.creator;
 
 import de.jonashackt.springbootvuejs.certificates.helpers.CertificateCreationHelper;
+import de.jonashackt.springbootvuejs.certificates.storage.Reader;
 import de.jonashackt.springbootvuejs.model.CertificateDetail;
 import de.jonashackt.springbootvuejs.model.CertificateWrapper;
 import de.jonashackt.springbootvuejs.repository.CertificateDetailRepository;
@@ -9,6 +10,7 @@ import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.cert.X509CertificateHolder;
 import org.bouncycastle.cert.X509v3CertificateBuilder;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateConverter;
+import org.bouncycastle.cert.jcajce.JcaX509CertificateHolder;
 import org.bouncycastle.cert.jcajce.JcaX509v3CertificateBuilder;
 import org.bouncycastle.operator.ContentSigner;
 import org.bouncycastle.operator.OperatorCreationException;
@@ -32,20 +34,28 @@ public class SelfSignedCertificateCreator implements ICertificateCreator {
 
     @Override
     public CertificateWrapper createCertificate(CertificateDetail issuerDetail, CertificateDetail subjectDetail) throws OperatorCreationException, CertificateException, ParseException {
-        //podaci izdavaca setifikata su u ovom slucaju i podaci subjekta jer je self signed sertifikat
-        //builder za potpis
         JcaContentSignerBuilder builder = new JcaContentSignerBuilder("SHA256WithRSAEncryption");
         builder = builder.setProvider("BC");
         KeyPair keyPair = CertificateCreationHelper.generateKeyPair();
         PublicKey publicKey = keyPair.getPublic();
         PrivateKey privateKey = keyPair.getPrivate();
+
         X500Name subjectX500Name = CertificateCreationHelper.generateX500Name(subjectDetail);
-        ContentSigner contentSigner = builder.build(keyPair.getPrivate());
+        Reader reader = new Reader();
+        PrivateKey privateKeyIssuer = reader.readPrivateKey("root.jks","password",issuerDetail.getEmail(),"milutin");
+        X509Certificate issuer = (X509Certificate) reader.readX509Certificate("root.jks","password",issuerDetail.getEmail());
+        X500Name issuerX500Name = new JcaX509CertificateHolder(issuer).getSubject();
+
+        System.out.println("===============issuerx500================");
+        System.out.println(issuerX500Name);
+
+        ContentSigner contentSigner = builder.build(privateKeyIssuer);
+
         long certificateSerialNumber = System.currentTimeMillis();
 
         SimpleDateFormat iso8601Formater = new SimpleDateFormat("yyyy-MM-dd");
 
-        X509v3CertificateBuilder certGen = new JcaX509v3CertificateBuilder(subjectX500Name,
+        X509v3CertificateBuilder certGen = new JcaX509v3CertificateBuilder(issuerX500Name,
                 new BigInteger(String.valueOf(certificateSerialNumber)),
                 subjectDetail.getStartAt(),
                 subjectDetail.getEndAt(),

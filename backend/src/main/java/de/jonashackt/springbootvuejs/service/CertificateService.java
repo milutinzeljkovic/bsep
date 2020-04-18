@@ -1,6 +1,7 @@
 package de.jonashackt.springbootvuejs.service;
 
 import de.jonashackt.springbootvuejs.certificates.creator.CertificateCreatorContext;
+import de.jonashackt.springbootvuejs.certificates.creator.EndEntityCertificateCreator;
 import de.jonashackt.springbootvuejs.certificates.creator.IntermediateCertificateCreator;
 import de.jonashackt.springbootvuejs.certificates.creator.SelfSignedCertificateCreator;
 import de.jonashackt.springbootvuejs.certificates.storage.Reader;
@@ -58,6 +59,18 @@ public class CertificateService implements ICertificateService {
         CertificateWrapper certificateWrapper = creator.createCertificate(issuer,subject);
         Writer writer = new Writer();
         writer.write(emailSubject,certificateWrapper.getPrivateKey(),"password",certificateWrapper.getCertificate(),"intermediate.jks", "milutin");
+        return subject;
+    }
+
+    @Override
+    public CertificateDetail issueEE(String emailIssuer, String emailSubject) throws CertificateException, OperatorCreationException, ParseException {
+        CertificateDetail issuer = certificateDetailRepository.findOneByEmail(emailIssuer);
+        CertificateDetail subject = certificateDetailRepository.findOneByEmail(emailSubject);
+        CertificateCreatorContext creator = new CertificateCreatorContext();
+        creator.setCertificateCreator(new EndEntityCertificateCreator());
+        CertificateWrapper certificateWrapper = creator.createCertificate(issuer,subject);
+        Writer writer = new Writer();
+        writer.write(emailSubject,certificateWrapper.getPrivateKey(),"password",certificateWrapper.getCertificate(),"endentity.jks", "milutin");
         return subject;
     }
 }

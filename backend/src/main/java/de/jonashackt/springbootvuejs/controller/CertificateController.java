@@ -59,5 +59,9 @@ public class CertificateController {
         return certificateService.issueIntermediate(email_issuer,email_subject);
     }
 
+    @RequestMapping(path = "/issue/endentity/{email_issuer}/{email_subject}", method = RequestMethod.POST)
+    public CertificateDetail issueEE(@PathVariable String email_issuer, @PathVariable String email_subject) throws CertificateException, OperatorCreationException, ParseException {
+        return certificateService.issueEE(email_issuer,email_subject);
+    }
 
 }
