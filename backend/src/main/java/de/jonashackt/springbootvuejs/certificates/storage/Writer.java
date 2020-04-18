@@ -25,7 +25,7 @@ public class Writer {
     public void loadKeyStore(String fileName, char[] password) {
         try {
             if(fileName != null) {
-                keyStore.load( new FileInputStream(fileName), password);
+                keyStore.load( null, password);
             } else {
                 keyStore.load(null, password);
             }

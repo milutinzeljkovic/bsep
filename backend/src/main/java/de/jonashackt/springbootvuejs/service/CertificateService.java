@@ -1,6 +1,7 @@
 package de.jonashackt.springbootvuejs.service;
 
 import de.jonashackt.springbootvuejs.certificates.creator.CertificateCreatorContext;
+import de.jonashackt.springbootvuejs.certificates.creator.IntermediateCertificateCreator;
 import de.jonashackt.springbootvuejs.certificates.creator.SelfSignedCertificateCreator;
 import de.jonashackt.springbootvuejs.certificates.storage.Reader;
 import de.jonashackt.springbootvuejs.certificates.storage.Writer;
@@ -34,7 +35,7 @@ public class CertificateService implements ICertificateService {
         writer.write(email_subject,certificateWrapper.getPrivateKey(),"password",certificateWrapper.getCertificate(),"root.jks", "milutin");
 
 
-        Reader reader  = new Reader();
+        //Reader reader  = new Reader();
 //        System.out.println(reader.readAliases("root.jks","password"));
 //
 //        Certificate cw = reader.readX509Certificate("root.jks","password","mile@gmail.com");
@@ -44,7 +45,19 @@ public class CertificateService implements ICertificateService {
 //        System.out.println("======================svi=========================");
 //        System.out.println(reader.readAllCertificate("root.jks","password"));
 
-        System.out.println(reader.readPrivateKey("root.jks","password","milutin123@gmail.com","milutin"));
+        //System.out.println(reader.readPrivateKey("root.jks","password","milutin123@gmail.com","milutin"));
+        return subject;
+    }
+
+    @Override
+    public CertificateDetail issueIntermediate(String emailIssuer, String emailSubject) throws CertificateException, OperatorCreationException, ParseException {
+        CertificateDetail issuer = certificateDetailRepository.findOneByEmail(emailIssuer);
+        CertificateDetail subject = certificateDetailRepository.findOneByEmail(emailSubject);
+        CertificateCreatorContext creator = new CertificateCreatorContext();
+        creator.setCertificateCreator(new IntermediateCertificateCreator());
+        CertificateWrapper certificateWrapper = creator.createCertificate(issuer,subject);
+        Writer writer = new Writer();
+        writer.write(emailSubject,certificateWrapper.getPrivateKey(),"password",certificateWrapper.getCertificate(),"intermediate.jks", "milutin");
         return subject;
     }
 }

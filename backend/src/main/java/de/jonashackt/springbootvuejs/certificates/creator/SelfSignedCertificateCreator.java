@@ -45,7 +45,6 @@ public class SelfSignedCertificateCreator implements ICertificateCreator {
 
         SimpleDateFormat iso8601Formater = new SimpleDateFormat("yyyy-MM-dd");
 
-
         X509v3CertificateBuilder certGen = new JcaX509v3CertificateBuilder(subjectX500Name,
                 new BigInteger(String.valueOf(certificateSerialNumber)),
                 subjectDetail.getStartAt(),
@@ -57,9 +56,6 @@ public class SelfSignedCertificateCreator implements ICertificateCreator {
         JcaX509CertificateConverter certConverter = new JcaX509CertificateConverter();
         certConverter = certConverter.setProvider("BC");
         X509Certificate certificate = certConverter.getCertificate(certHolder);
-
-        System.out.println("==============================================================================");
-        System.out.println(certificate);
 
         CertificateWrapper certificateWrapper = new CertificateWrapper();
         certificateWrapper.setCertificate(certificate);

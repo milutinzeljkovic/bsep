@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.text.ParseException;
 import java.util.List;
@@ -45,13 +46,17 @@ public class CertificateController {
 
     @RequestMapping(path = "/email/{email}", method = RequestMethod.GET)
     public CertificateDetail getOneByEmail(@PathVariable String email){
-        CertificateDetail d = certificateDetailService.getOneByEmail(email);
-        return d;
+        return certificateDetailService.getOneByEmail(email);
     }
 
     @RequestMapping(path = "/issue/{email_issuer}/{email_subject}", method = RequestMethod.POST)
     public CertificateDetail issue(@PathVariable String email_issuer, @PathVariable String email_subject) throws CertificateException, OperatorCreationException, ParseException {
         return certificateService.issue(email_issuer,email_subject);
+    }
+
+    @RequestMapping(path = "/issue/intermediate/{email_issuer}/{email_subject}", method = RequestMethod.POST)
+    public CertificateDetail issueIntermediate(@PathVariable String email_issuer, @PathVariable String email_subject) throws CertificateException, OperatorCreationException, ParseException {
+        return certificateService.issueIntermediate(email_issuer,email_subject);
     }
 
 
