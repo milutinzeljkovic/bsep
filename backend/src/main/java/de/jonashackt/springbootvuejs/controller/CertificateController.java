@@ -1,19 +1,17 @@
 package de.jonashackt.springbootvuejs.controller;
 
 import de.jonashackt.springbootvuejs.certificates.creator.CertificateCreatorContext;
-import de.jonashackt.springbootvuejs.certificates.creator.SelfSignedCertificateCreator;
 import de.jonashackt.springbootvuejs.model.CertificateDetail;
-import de.jonashackt.springbootvuejs.repository.CertificateDetailRepository;
 import de.jonashackt.springbootvuejs.service.CertificateDetailService;
-import org.apache.coyote.Response;
+import de.jonashackt.springbootvuejs.service.CertificateService;
 import org.bouncycastle.operator.OperatorCreationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.cert.CertificateException;
+import java.text.ParseException;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -22,6 +20,9 @@ public class CertificateController {
 
     @Autowired
     CertificateDetailService certificateDetailService;
+
+    @Autowired
+    CertificateService certificateService;
 
     @PostMapping(path = "")
     public ResponseEntity<CertificateDetail> create(@RequestBody CertificateDetail certificateDetail){
@@ -38,18 +39,20 @@ public class CertificateController {
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-    public Optional<CertificateDetail> getOneById(@PathVariable UUID id){
+    public CertificateDetail getOneById(@PathVariable UUID id){
         return certificateDetailService.getOneById(id);
     }
 
     @RequestMapping(path = "/email/{email}", method = RequestMethod.GET)
     public CertificateDetail getOneByEmail(@PathVariable String email){
-        return certificateDetailService.getOneByEmail(email);
+        CertificateDetail d = certificateDetailService.getOneByEmail(email);
+        return d;
     }
 
-    @RequestMapping(path = "/test", method = RequestMethod.GET)
-    public String test(){
-        return  certificateDetailService.test();
+    @RequestMapping(path = "/issue/{email_issuer}/{email_subject}", method = RequestMethod.POST)
+    public CertificateDetail issue(@PathVariable String email_issuer, @PathVariable String email_subject) throws CertificateException, OperatorCreationException, ParseException {
+        return certificateService.issue(email_issuer,email_subject);
     }
+
 
 }

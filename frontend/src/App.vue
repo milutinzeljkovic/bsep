@@ -4,6 +4,7 @@
       <router-link to="/user">User</router-link>|
       <router-link to="/login">Login</router-link>|
       <router-link to="/entities">Entities</router-link>|
+      <router-link to="/certificates">Certificates</router-link>|
     </div>
     <router-view :hellomsg="msg"></router-view>
   </div>

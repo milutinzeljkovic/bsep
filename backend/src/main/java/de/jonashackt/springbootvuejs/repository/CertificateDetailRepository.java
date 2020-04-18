@@ -10,7 +10,7 @@ import java.util.UUID;
 @Repository
 public interface CertificateDetailRepository extends JpaRepository<CertificateDetail, UUID> {
 
-    Optional<CertificateDetail> findOneById(UUID id);
+    CertificateDetail findOneById(UUID id);
     CertificateDetail findOneByEmail(String email);
 
 }
