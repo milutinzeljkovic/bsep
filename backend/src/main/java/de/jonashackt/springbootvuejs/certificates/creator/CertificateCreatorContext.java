@@ -9,7 +9,6 @@ import lombok.Setter;
 import org.bouncycastle.operator.OperatorCreationException;
 
 import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
 import java.text.ParseException;
 
 @Getter

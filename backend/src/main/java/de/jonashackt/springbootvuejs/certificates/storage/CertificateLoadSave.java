@@ -1,9 +1,7 @@
 package de.jonashackt.springbootvuejs.certificates.storage;
 
 import org.bouncycastle.openssl.jcajce.JcaPEMWriter;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.servlet.ServletContext;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;

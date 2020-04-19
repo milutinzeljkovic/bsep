@@ -6,7 +6,6 @@ import de.jonashackt.springbootvuejs.model.CertificateDetail;
 import de.jonashackt.springbootvuejs.repository.CertificateDetailRepository;
 import org.bouncycastle.operator.OperatorCreationException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import java.security.cert.CertificateException;
@@ -51,21 +50,4 @@ public class CertificateDetailService implements  ICertificateDetailService {
         return ret;
     }
 
-    @Override
-    public String test(){
-        CertificateCreatorContext context = new CertificateCreatorContext(new SelfSignedCertificateCreator());
-        try {
-            CertificateDetail issuer = certificateDetailRepository.findOneByEmail("milutinzeljkovic@gmail.com");
-            System.out.println(issuer);
-            context.createCertificate(issuer, issuer);
-            return "test";
-        } catch (CertificateException e) {
-            e.printStackTrace();
-        } catch (OperatorCreationException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 }

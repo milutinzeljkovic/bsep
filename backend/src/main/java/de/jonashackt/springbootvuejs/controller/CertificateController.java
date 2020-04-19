@@ -1,6 +1,5 @@
 package de.jonashackt.springbootvuejs.controller;
 
-import de.jonashackt.springbootvuejs.certificates.creator.CertificateCreatorContext;
 import de.jonashackt.springbootvuejs.model.CertificateDetail;
 import de.jonashackt.springbootvuejs.service.CertificateDetailService;
 import de.jonashackt.springbootvuejs.service.CertificateService;
@@ -10,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.text.ParseException;
 import java.util.List;

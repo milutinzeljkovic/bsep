@@ -20,7 +20,6 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
-import java.text.SimpleDateFormat;
 
 public class EndEntityCertificateCreator implements  ICertificateCreator {
 

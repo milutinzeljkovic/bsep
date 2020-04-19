@@ -4,10 +4,8 @@ import de.jonashackt.springbootvuejs.model.CertificateDetail;
 import org.bouncycastle.operator.OperatorCreationException;
 
 import java.io.IOException;
-import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.text.ParseException;
-import java.util.UUID;
 
 public interface ICertificateService {
 
