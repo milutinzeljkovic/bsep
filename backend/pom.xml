@@ -121,6 +121,14 @@
 			<artifactId>lombok</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>de.ohmesoftware</groupId>
+			<artifactId>keytool</artifactId>
+			<version>0.0.2</version>
+		</dependency>
+		<!-- Thanks for using https://jar-download.com -->
+
+
 
 	</dependencies>
 

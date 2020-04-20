@@ -3,6 +3,7 @@ package de.jonashackt.springbootvuejs.controller;
 import de.jonashackt.springbootvuejs.model.CertificateDetail;
 import de.jonashackt.springbootvuejs.service.CertificateDetailService;
 import de.jonashackt.springbootvuejs.service.CertificateService;
+import org.apache.coyote.Response;
 import org.bouncycastle.operator.OperatorCreationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -62,5 +63,12 @@ public class CertificateController {
     public CertificateDetail issueEE(@PathVariable String email_issuer, @PathVariable String email_subject) throws CertificateException, OperatorCreationException, ParseException, IOException {
         return certificateService.issueEE(email_issuer,email_subject);
     }
+
+    @RequestMapping(path = "/test", method =  RequestMethod.GET)
+    public ResponseEntity<String> test(){
+        return ResponseEntity.status(200).body(certificateService.test());
+
+    }
+
 
 }

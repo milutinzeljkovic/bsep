@@ -1,4 +1,4 @@
-package de.jonashackt.springbootvuejs.certificates.helpers;
+package de.jonashackt.springbootvuejs.certificates.util;
 
 import de.jonashackt.springbootvuejs.model.CertificateDetail;
 import org.bouncycastle.asn1.x500.X500Name;
@@ -8,7 +8,7 @@ import org.bouncycastle.asn1.x500.style.BCStyle;
 import java.security.*;
 
 
-public class CertificateCreationHelper {
+public class CertificateCreation {
     public static X500Name generateX500Name(CertificateDetail certificateDetail){
         System.out.println(certificateDetail);
         X500NameBuilder builder = new X500NameBuilder(BCStyle.INSTANCE);

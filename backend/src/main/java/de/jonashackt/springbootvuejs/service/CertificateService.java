@@ -5,6 +5,7 @@ import de.jonashackt.springbootvuejs.certificates.creator.EndEntityCertificateCr
 import de.jonashackt.springbootvuejs.certificates.creator.IntermediateCertificateCreator;
 import de.jonashackt.springbootvuejs.certificates.creator.SelfSignedCertificateCreator;
 import de.jonashackt.springbootvuejs.certificates.storage.CertificateLoadSave;
+import de.jonashackt.springbootvuejs.certificates.storage.Reader;
 import de.jonashackt.springbootvuejs.certificates.storage.Writer;
 import de.jonashackt.springbootvuejs.model.CertificateDetail;
 import de.jonashackt.springbootvuejs.model.CertificateWrapper;
@@ -12,9 +13,12 @@ import de.jonashackt.springbootvuejs.repository.CertificateDetailRepository;
 import org.bouncycastle.operator.OperatorCreationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.security.tools.KeyStoreUtil;
 
 import java.io.IOException;
+import java.security.KeyStore;
 import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.text.ParseException;
 
 @Service
@@ -61,4 +65,14 @@ public class CertificateService implements ICertificateService {
         CertificateLoadSave.saveCertificate(certificateWrapper.getCertificate());
         return subject;
     }
+
+    @Override
+    public String test() {
+        Reader reader = new Reader();
+        X509Certificate certificate = (X509Certificate) reader.readX509Certificate("root.jks","password","milutin123@gmail.com");
+        //System.out.println(ret);
+        return "sjkdjsak";
+    }
+
+
 }

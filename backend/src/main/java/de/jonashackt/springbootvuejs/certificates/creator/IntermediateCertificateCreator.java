@@ -1,6 +1,6 @@
 package de.jonashackt.springbootvuejs.certificates.creator;
 
-import de.jonashackt.springbootvuejs.certificates.helpers.CertificateCreationHelper;
+import de.jonashackt.springbootvuejs.certificates.util.CertificateCreation;
 import de.jonashackt.springbootvuejs.certificates.storage.Reader;
 import de.jonashackt.springbootvuejs.model.CertificateDetail;
 import de.jonashackt.springbootvuejs.model.CertificateWrapper;
@@ -27,11 +27,11 @@ public class IntermediateCertificateCreator implements ICertificateCreator {
 
         JcaContentSignerBuilder builder = new JcaContentSignerBuilder("SHA256WithRSAEncryption");
         builder = builder.setProvider("BC");
-        KeyPair keyPair = CertificateCreationHelper.generateKeyPair();
+        KeyPair keyPair = CertificateCreation.generateKeyPair();
         PublicKey publicKey = keyPair.getPublic();
         PrivateKey privateKey = keyPair.getPrivate();
 
-        X500Name subjectX500Name = CertificateCreationHelper.generateX500Name(subjectDetail);
+        X500Name subjectX500Name = CertificateCreation.generateX500Name(subjectDetail);
         Reader reader = new Reader();
         PrivateKey privateKeyIssuer = reader.readPrivateKey("keystore/root.jks","password",issuerDetail.getEmail(),"milutin");
         X509Certificate issuer = (X509Certificate) reader.readX509Certificate("keystore/root.jks","password",issuerDetail.getEmail());
