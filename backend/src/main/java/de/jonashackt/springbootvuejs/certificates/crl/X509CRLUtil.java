@@ -31,20 +31,23 @@ import java.security.SignatureException;
 import java.security.cert.*;
 import java.util.Date;
 
+//treba napraviti metod za postavljanje issuera da nije ovaj defaultni
 public class X509CRLUtil {
 
     private static X509CRLUtil instance = null;
-    private X509v2CRLBuilder crlGenerator;
+    private X509v2CRLBuilder x509v2CRLBuilder;
     private CertificateWrapper certificateWrapper;
+    private X509CRL previousX509CRL = null;
 
     private X509CRLUtil() throws CertIOException, CertificateEncodingException {
         Reader reader = new Reader();
-        //neki root cert mora postojati koji moze da revokuje sertifikate
+        //citanje issuera
         certificateWrapper = reader.readCertificate("keystore/root.jks","milutin123@gmail.com","password".toCharArray(),"milutin".toCharArray());
         X509Certificate certificate = certificateWrapper.getCertificate();
         X500Name x500name = new JcaX509CertificateHolder(certificate).getSubject();
-        crlGenerator = new X509v2CRLBuilder(x500name,new Date());
-        crlGenerator.setNextUpdate(new Date());
+        x509v2CRLBuilder = new X509v2CRLBuilder(x500name,new Date());
+        x509v2CRLBuilder.setNextUpdate(new Date());
+
     }
 
     public static X509CRLUtil getInstance() throws CertIOException, CertificateEncodingException {
@@ -54,16 +57,18 @@ public class X509CRLUtil {
         return instance;
     }
 
-    public X509CRL revokeCert(X509Certificate certificate) throws OperatorCreationException, CRLException, IOException {
+    public X509CRL revokeCert(X509Certificate certificate) throws OperatorCreationException, CRLException, IOException, CertificateException {
         //povlacenje sertifikata
-        crlGenerator.addCRLEntry(certificate.getSerialNumber(),new Date(), CRLReason.privilegeWithdrawn);
+        x509v2CRLBuilder.addCRLEntry(certificate.getSerialNumber(),new Date(), CRLReason.privilegeWithdrawn);
         JcaContentSignerBuilder builder = new JcaContentSignerBuilder("SHA256WithRSAEncryption");
         ContentSigner contentSigner = builder.build(certificateWrapper.getPrivateKey());
-        X509CRLHolder crlHolder = crlGenerator.build(contentSigner);
+        //potpis privatnim kljucem ca
+        X509CRLHolder crlHolder = x509v2CRLBuilder.build(contentSigner);
         JcaX509CRLConverter converter = new JcaX509CRLConverter();
         converter.setProvider("BC");
-        CRLLoadSave.saveCRL(converter.getCRL(crlHolder));
-        return converter.getCRL(crlHolder);
+        X509CRL x509CRL = converter.getCRL(crlHolder);
+        CRLLoadSave.saveCRL(x509CRL);
+        return x509CRL;
     }
 
 }

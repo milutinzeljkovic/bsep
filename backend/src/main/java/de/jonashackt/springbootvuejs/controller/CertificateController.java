@@ -72,7 +72,7 @@ public class CertificateController {
     }
 
     @RequestMapping(path = "/test", method =  RequestMethod.GET)
-    public ResponseEntity<String> test() throws IOException, OperatorCreationException, CertificateEncodingException, CRLException {
+    public ResponseEntity<String> test() throws IOException, OperatorCreationException, CertificateException, CRLException {
         return ResponseEntity.status(200).body(certificateService.test());
 
     }

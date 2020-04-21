@@ -76,7 +76,7 @@ public class CertificateService implements ICertificateService {
     }
 
     @Override
-    public String test() throws IOException, OperatorCreationException, CertificateEncodingException, CRLException {
+    public String test() throws IOException, OperatorCreationException, CertificateException, CRLException {
         X509CRLUtil util = X509CRLUtil.getInstance();
         Reader reader = new Reader();
         X509Certificate x509Certificate = (X509Certificate) reader.readX509Certificate("keystore/intermediate.jks","password","novi123123123@gmail.com");
