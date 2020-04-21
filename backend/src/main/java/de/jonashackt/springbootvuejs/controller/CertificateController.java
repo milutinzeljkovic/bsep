@@ -4,13 +4,20 @@ import de.jonashackt.springbootvuejs.model.CertificateDetail;
 import de.jonashackt.springbootvuejs.service.CertificateDetailService;
 import de.jonashackt.springbootvuejs.service.CertificateService;
 import org.apache.coyote.Response;
+import org.bouncycastle.cert.CertIOException;
 import org.bouncycastle.operator.OperatorCreationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchProviderException;
+import java.security.SignatureException;
+import java.security.cert.CRLException;
+import java.security.cert.CertificateEncodingException;
 import java.security.cert.CertificateException;
+import java.security.cert.CertificateParsingException;
 import java.text.ParseException;
 import java.util.List;
 import java.util.UUID;
@@ -65,7 +72,7 @@ public class CertificateController {
     }
 
     @RequestMapping(path = "/test", method =  RequestMethod.GET)
-    public ResponseEntity<String> test(){
+    public ResponseEntity<String> test() throws IOException, OperatorCreationException, CertificateEncodingException, CRLException {
         return ResponseEntity.status(200).body(certificateService.test());
 
     }

@@ -4,22 +4,30 @@ import de.jonashackt.springbootvuejs.certificates.creator.CertificateCreatorCont
 import de.jonashackt.springbootvuejs.certificates.creator.EndEntityCertificateCreator;
 import de.jonashackt.springbootvuejs.certificates.creator.IntermediateCertificateCreator;
 import de.jonashackt.springbootvuejs.certificates.creator.SelfSignedCertificateCreator;
+import de.jonashackt.springbootvuejs.certificates.crl.X509CRLUtil;
 import de.jonashackt.springbootvuejs.certificates.storage.CertificateLoadSave;
 import de.jonashackt.springbootvuejs.certificates.storage.Reader;
 import de.jonashackt.springbootvuejs.certificates.storage.Writer;
 import de.jonashackt.springbootvuejs.model.CertificateDetail;
 import de.jonashackt.springbootvuejs.model.CertificateWrapper;
 import de.jonashackt.springbootvuejs.repository.CertificateDetailRepository;
+import org.bouncycastle.cert.CertIOException;
+import org.bouncycastle.cert.X509CRLEntryHolder;
+import org.bouncycastle.cert.X509CRLHolder;
 import org.bouncycastle.operator.OperatorCreationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sun.security.tools.KeyStoreUtil;
 
 import java.io.IOException;
+import java.security.InvalidKeyException;
 import java.security.KeyStore;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
+import java.security.NoSuchProviderException;
+import java.security.SignatureException;
+import java.security.cert.*;
 import java.text.ParseException;
+import java.util.Collection;
+import java.util.Iterator;
 
 @Service
 public class CertificateService implements ICertificateService {
@@ -67,11 +75,19 @@ public class CertificateService implements ICertificateService {
     }
 
     @Override
-    public String test() {
+    public String test() throws IOException, OperatorCreationException, CertificateEncodingException, CRLException {
+        X509CRLUtil util = X509CRLUtil.getInstance();
         Reader reader = new Reader();
-        X509Certificate certificate = (X509Certificate) reader.readX509Certificate("root.jks","password","milutin123@gmail.com");
-        //System.out.println(ret);
-        return "sjkdjsak";
+        X509Certificate x509Certificate = (X509Certificate) reader.readX509Certificate("keystore/intermediate.jks","password","novi123123123@gmail.com");
+
+        X509CRL crl = util.revokeCert(x509Certificate);
+        return crl.toString();
+//        Collection<X509Certificate> collection = crl.getRevokedCertificates();
+//        Iterator<X509Certificate> iterator = collection.iterator();
+//        while (iterator.hasNext()) {
+//            X509Certificate entryHolder = iterator.next();
+//        }
+//        return crl.getRevokedCertificates().toString();
     }
 
 

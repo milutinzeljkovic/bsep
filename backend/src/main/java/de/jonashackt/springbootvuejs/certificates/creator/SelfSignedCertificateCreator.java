@@ -28,6 +28,7 @@ public class SelfSignedCertificateCreator implements ICertificateCreator {
     @Override
     public CertificateWrapper createCertificate(CertificateDetail issuerDetail, CertificateDetail subjectDetail) throws OperatorCreationException, CertificateException, ParseException {
         JcaContentSignerBuilder builder = new JcaContentSignerBuilder("SHA256WithRSAEncryption");
+
         builder = builder.setProvider("BC");
         KeyPair keyPair = CertificateCreation.generateKeyPair();
         PublicKey publicKey = keyPair.getPublic();
