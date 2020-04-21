@@ -28,6 +28,7 @@ import java.security.cert.*;
 import java.text.ParseException;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Set;
 
 @Service
 public class CertificateService implements ICertificateService {
@@ -81,13 +82,14 @@ public class CertificateService implements ICertificateService {
         X509Certificate x509Certificate = (X509Certificate) reader.readX509Certificate("keystore/intermediate.jks","password","novi123123123@gmail.com");
 
         X509CRL crl = util.revokeCert(x509Certificate);
+
+        Set<? extends X509CRLEntry> set = crl.getRevokedCertificates();
+        Iterator<X509CRLEntry> iterator = (Iterator<X509CRLEntry>) set.iterator();
+        while (iterator.hasNext()) {
+            X509CRLEntry entry = iterator.next();
+            System.out.println(entry.getSerialNumber());
+        }
         return crl.toString();
-//        Collection<X509Certificate> collection = crl.getRevokedCertificates();
-//        Iterator<X509Certificate> iterator = collection.iterator();
-//        while (iterator.hasNext()) {
-//            X509Certificate entryHolder = iterator.next();
-//        }
-//        return crl.getRevokedCertificates().toString();
     }
 
 
