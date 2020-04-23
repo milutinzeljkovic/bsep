@@ -11,22 +11,13 @@ import de.jonashackt.springbootvuejs.certificates.storage.Writer;
 import de.jonashackt.springbootvuejs.model.CertificateDetail;
 import de.jonashackt.springbootvuejs.model.CertificateWrapper;
 import de.jonashackt.springbootvuejs.repository.CertificateDetailRepository;
-import org.bouncycastle.cert.CertIOException;
-import org.bouncycastle.cert.X509CRLEntryHolder;
-import org.bouncycastle.cert.X509CRLHolder;
 import org.bouncycastle.operator.OperatorCreationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.security.tools.KeyStoreUtil;
 
 import java.io.IOException;
-import java.security.InvalidKeyException;
-import java.security.KeyStore;
-import java.security.NoSuchProviderException;
-import java.security.SignatureException;
 import java.security.cert.*;
 import java.text.ParseException;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -76,18 +67,16 @@ public class CertificateService implements ICertificateService {
     }
 
     @Override
-    public String test() throws IOException, OperatorCreationException, CertificateException, CRLException {
+    public String revokeX509Certificate(String issuerEmail, String certificateAlias) throws IOException, OperatorCreationException, CertificateException, CRLException {
         X509CRLUtil util = X509CRLUtil.getInstance();
         Reader reader = new Reader();
-        X509Certificate x509Certificate = (X509Certificate) reader.readX509Certificate("keystore/intermediate.jks","password","novi123123123@gmail.com");
-
-        X509CRL crl = util.revokeCert(x509Certificate);
-
+        X509Certificate x509Certificate = (X509Certificate) reader.readX509Certificate("keystore/intermediate.jks","password",certificateAlias);
+        util.createUpdate(null, issuerEmail);
+        X509CRL crl = util.revokeCertificate(x509Certificate);
         Set<? extends X509CRLEntry> set = crl.getRevokedCertificates();
         Iterator<X509CRLEntry> iterator = (Iterator<X509CRLEntry>) set.iterator();
         while (iterator.hasNext()) {
             X509CRLEntry entry = iterator.next();
-            System.out.println(entry.getSerialNumber());
         }
         return crl.toString();
     }
