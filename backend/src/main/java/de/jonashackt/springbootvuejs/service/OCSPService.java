@@ -20,8 +20,7 @@ public class OCSPService implements IOCSPService {
     public boolean verify(String email) throws NoSuchProviderException, CertificateException, NoSuchAlgorithmException, InvalidKeyException {
         Reader reader = new Reader();
         X509Certificate subject = ( reader.readCertificate("keystore/intermediate.jks",email,"password".toCharArray(),"milutin".toCharArray())).getCertificate();
-        //System.out.println(subject.getIssuerX500Principal().getName());
-        X509Certificate issuer = CertificateLoadSave.loadCertificate(subject.getIssuerDN().getName());
+        X509Certificate issuer = ( reader.readCertificate("keystore/root.jks","milutin123@gmail.com","password".toCharArray(),"milutin".toCharArray())).getCertificate();
         try {
             subject.verify(issuer.getPublicKey());
             return true;
