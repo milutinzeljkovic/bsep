@@ -72,7 +72,7 @@ public class CertificateController {
     }
 
     @RequestMapping(path = "/revoke/{allias_issuer}/{alias_certificate}", method =  RequestMethod.GET)
-    public ResponseEntity<String> test(@PathVariable String allias_issuer, @PathVariable String alias_certificate) throws IOException, OperatorCreationException, CertificateException, CRLException {
+    public ResponseEntity<String> revoke(@PathVariable String allias_issuer, @PathVariable String alias_certificate) throws IOException, OperatorCreationException, CertificateException, CRLException {
         return ResponseEntity.status(200).body(certificateService.revokeX509Certificate(allias_issuer,alias_certificate));
 
     }
@@ -83,6 +83,9 @@ public class CertificateController {
 
     }
 
-
+    @RequestMapping(path = "/ocsp/crl-check/{alias_certificate}", method =  RequestMethod.GET)
+    public ResponseEntity<Boolean> isRevoked(@PathVariable String alias_certificate) throws IOException, OperatorCreationException, CertificateException, CRLException, NoSuchAlgorithmException, InvalidKeyException, NoSuchProviderException {
+        return ResponseEntity.status(200).body(ocspService.isRevoked(alias_certificate));
+    }
 
 }

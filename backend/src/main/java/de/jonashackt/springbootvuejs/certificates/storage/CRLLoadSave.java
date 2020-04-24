@@ -1,11 +1,5 @@
 package de.jonashackt.springbootvuejs.certificates.storage;
-
-import org.bouncycastle.asn1.ASN1Primitive;
-import org.bouncycastle.asn1.BERTaggedObject;
 import org.bouncycastle.openssl.jcajce.JcaPEMWriter;
-import org.bouncycastle.util.io.pem.PemObject;
-import org.bouncycastle.util.io.pem.PemReader;
-
 import java.io.*;
 import java.security.cert.*;
 
@@ -27,6 +21,7 @@ public class CRLLoadSave {
         try (InputStream inStream = new FileInputStream(path)) {
             CertificateFactory cf = CertificateFactory.getInstance("X.509");
             X509CRL crl = (X509CRL)cf.generateCRL(inStream);
+            inStream.close();
             return crl;
         }
     }

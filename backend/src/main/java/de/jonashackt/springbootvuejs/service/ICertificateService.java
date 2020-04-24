@@ -1,7 +1,6 @@
 package de.jonashackt.springbootvuejs.service;
 
 import de.jonashackt.springbootvuejs.model.CertificateDetail;
-import org.bouncycastle.cert.CertIOException;
 import org.bouncycastle.operator.OperatorCreationException;
 
 import java.io.IOException;
@@ -9,9 +8,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchProviderException;
 import java.security.SignatureException;
 import java.security.cert.CRLException;
-import java.security.cert.CertificateEncodingException;
 import java.security.cert.CertificateException;
-import java.security.cert.CertificateParsingException;
 import java.text.ParseException;
 
 public interface ICertificateService {

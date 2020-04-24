@@ -24,6 +24,8 @@ public class CertificateLoadSave {
     }
 
     public static X509Certificate loadCertificate(String name){
+        System.out.println(name.split(",")[1].split("=")[1].trim());
+        System.out.println(name);
         String fileName = name.split(",")[0].split("=")[1].trim();
         fileName+=".cer";
         String path = "certificates"+ File.separator + fileName;
