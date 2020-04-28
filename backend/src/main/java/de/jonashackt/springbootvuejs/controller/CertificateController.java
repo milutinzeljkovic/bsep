@@ -88,4 +88,9 @@ public class CertificateController {
         return ResponseEntity.status(200).body(ocspService.isRevoked(alias_certificate));
     }
 
+    @RequestMapping(path = "/ocsp/expiration/{alias_certificate}", method =  RequestMethod.GET)
+    public ResponseEntity<Boolean> hasExpired(@PathVariable String alias_certificate) throws IOException, OperatorCreationException, CertificateException, CRLException, NoSuchAlgorithmException, InvalidKeyException, NoSuchProviderException {
+        return ResponseEntity.status(200).body(ocspService.hasExpired(alias_certificate));
+    }
+
 }

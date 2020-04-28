@@ -10,6 +10,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.SignatureException;
 import java.security.cert.*;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -51,6 +52,22 @@ public class OCSPService implements IOCSPService {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public boolean hasExpired(String email) {
+        Reader reader = new Reader();
+        X509Certificate certificate = (X509Certificate) reader.readX509Certificate("keystore/intermediate.jks","password",email);
+        if(certificate == null){
+            certificate = (X509Certificate) reader.readX509Certificate("keystore/endentity.jks","password",email);
+        }
+        if(certificate == null){
+            certificate = (X509Certificate) reader.readX509Certificate("keystore/root.jks","password",email);
+        }
+        if(new Date().getTime() > certificate.getNotAfter().getTime()){
+            return true;
+        }
+        return false;
     }
 
 

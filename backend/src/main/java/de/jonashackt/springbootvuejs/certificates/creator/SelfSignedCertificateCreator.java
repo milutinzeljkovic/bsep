@@ -5,6 +5,9 @@ import de.jonashackt.springbootvuejs.certificates.storage.Reader;
 import de.jonashackt.springbootvuejs.model.CertificateDetail;
 import de.jonashackt.springbootvuejs.model.CertificateWrapper;
 import org.bouncycastle.asn1.x500.X500Name;
+import org.bouncycastle.asn1.x509.BasicConstraints;
+import org.bouncycastle.asn1.x509.X509Extension;
+import org.bouncycastle.cert.CertIOException;
 import org.bouncycastle.cert.X509CertificateHolder;
 import org.bouncycastle.cert.X509v3CertificateBuilder;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateConverter;
@@ -26,7 +29,7 @@ import java.text.ParseException;
 public class SelfSignedCertificateCreator implements ICertificateCreator {
 
     @Override
-    public CertificateWrapper createCertificate(CertificateDetail issuerDetail, CertificateDetail subjectDetail) throws OperatorCreationException, CertificateException, ParseException {
+    public CertificateWrapper createCertificate(CertificateDetail issuerDetail, CertificateDetail subjectDetail) throws OperatorCreationException, CertificateException, ParseException, CertIOException {
         JcaContentSignerBuilder builder = new JcaContentSignerBuilder("SHA256WithRSAEncryption");
 
         builder = builder.setProvider("BC");
@@ -50,6 +53,9 @@ public class SelfSignedCertificateCreator implements ICertificateCreator {
                 subjectDetail.getEndAt(),
                 subjectX500Name,
                 publicKey);
+
+        certGen.addExtension(X509Extension.basicConstraints,false, new BasicConstraints(true));
+
 
         X509CertificateHolder certHolder = certGen.build(contentSigner);
         JcaX509CertificateConverter certConverter = new JcaX509CertificateConverter();

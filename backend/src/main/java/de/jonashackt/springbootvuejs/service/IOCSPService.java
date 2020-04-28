@@ -12,5 +12,5 @@ public interface IOCSPService {
 
     boolean verify(String email) throws NoSuchProviderException, CertificateException, NoSuchAlgorithmException, InvalidKeyException, SignatureException;
     boolean isRevoked(String email) throws CertificateException, CRLException, IOException;
-
+    boolean hasExpired(String email);
 }
