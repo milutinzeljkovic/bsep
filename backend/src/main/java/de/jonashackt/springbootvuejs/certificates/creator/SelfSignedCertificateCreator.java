@@ -40,7 +40,7 @@ public class SelfSignedCertificateCreator implements ICertificateCreator {
         X500Name subjectX500Name = CertificateCreation.generateX500Name(subjectDetail);
         Reader reader = new Reader();
         PrivateKey privateKeyIssuer = reader.readPrivateKey("keystore/root.jks","password",issuerDetail.getEmail(),"milutin");
-        X509Certificate issuer = (X509Certificate) reader.readX509Certificate("keystore/oot.jks","password",issuerDetail.getEmail());
+        X509Certificate issuer = (X509Certificate) reader.readX509Certificate("keystore/root.jks","password",issuerDetail.getEmail());
         X500Name issuerX500Name = new JcaX509CertificateHolder(issuer).getSubject();
 
         ContentSigner contentSigner = builder.build(privateKeyIssuer);

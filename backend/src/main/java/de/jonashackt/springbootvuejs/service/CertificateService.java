@@ -37,6 +37,7 @@ public class CertificateService implements ICertificateService {
         Writer writer = new Writer();
         writer.write(email_subject,certificateWrapper.getPrivateKey(),"password",certificateWrapper.getCertificate(),"keystore/root.jks", "milutin");
         CertificateLoadSave.saveCertificate(certificateWrapper.getCertificate());
+        subject.setIssued(true);
         return subject;
     }
 
@@ -50,6 +51,7 @@ public class CertificateService implements ICertificateService {
         Writer writer = new Writer();
         writer.write(emailSubject,certificateWrapper.getPrivateKey(),"password",certificateWrapper.getCertificate(),"keystore/intermediate.jks", "milutin");
         CertificateLoadSave.saveCertificate(certificateWrapper.getCertificate());
+        subject.setIssued(true);
         return subject;
     }
 
@@ -63,6 +65,7 @@ public class CertificateService implements ICertificateService {
         Writer writer = new Writer();
         writer.write(emailSubject,certificateWrapper.getPrivateKey(),"password",certificateWrapper.getCertificate(),"keystore/endentity.jks", "milutin");
         CertificateLoadSave.saveCertificate(certificateWrapper.getCertificate());
+        subject.setIssued(true);
         return subject;
     }
 

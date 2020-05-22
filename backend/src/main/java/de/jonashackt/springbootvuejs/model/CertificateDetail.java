@@ -56,6 +56,8 @@ public class CertificateDetail extends AbstractBaseEntity{
 
     private boolean isActive;
 
+    private boolean issued;
+
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "issuer_id", referencedColumnName = "id")
     @NotFound(action = NotFoundAction.IGNORE)

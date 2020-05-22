@@ -1,4 +1,7 @@
 // vue.config.js
+const fs = require('fs')
+var path = require('path');
+
 module.exports = {
   // proxy all webpack dev-server requests starting with /api
   // to our Spring Boot backend (localhost:8088) using http-proxy-middleware
@@ -10,7 +13,13 @@ module.exports = {
         ws: true,
         changeOrigin: true
       }
-    }
+    },
+      https: {
+        key: fs.readFileSync('/Users/milutinzeljkovic/localhost+3-key.pem'),
+        cert: fs.readFileSync('/Users/milutinzeljkovic/localhost+3.pem'),
+      },
+      public: 'https://localhost:8080/'
+
   },
   // Change build paths to make them Maven compatible
   // see https://cli.vuejs.org/config/
