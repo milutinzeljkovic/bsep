@@ -1,28 +1,35 @@
-import axios from 'axios'
+import axios from "axios";
 
 const AXIOS = axios.create({
   baseURL: `/api`,
-  timeout: 1000
+  timeout: 1000,
 });
 
-
 export default {
-    hello() {
-        return AXIOS.get(`/hello`);
-    },
-    getUser(userId) {
-        return AXIOS.get(`/user/` + userId);
-    },
-    createUser(firstName, lastName) {
-        return AXIOS.post(`/user/` + firstName + '/' + lastName);
-    },
-    getSecured(user, password) {
-        return AXIOS.get(`/secured/`,{
-            auth: {
-                username: user,
-                password: password
-            }});
-    }
-}
-
-
+  hello() {
+    return AXIOS.get(`/hello`);
+  },
+  getUser(userId) {
+    return AXIOS.get(`/user/` + userId);
+  },
+  createUser(firstName, lastName) {
+    return AXIOS.post(`/user/` + firstName + "/" + lastName);
+  },
+  getSecured(user, password) {
+    return AXIOS.get(`/secured/`, {
+      auth: {
+        username: user,
+        password: password,
+      },
+    });
+  },
+  addCertificate(certificate) {
+    return AXIOS.post("/certificates", certificate);
+  },
+  getAllCertificates() {
+    return AXIOS.get("/certificates");
+  },
+  revokeCertificate(aliasIssuer, aliasCertificate) {
+    return AXIOS.get(`/certificates/revoke/${aliasIssuer}/${aliasCertificate}`);
+  },
+};
