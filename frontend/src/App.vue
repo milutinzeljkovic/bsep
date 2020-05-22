@@ -5,26 +5,27 @@
       <router-link to="/login">Login</router-link>|
       <router-link to="/entities">Entities</router-link>|
       <router-link to="/certificates">Certificates</router-link>|
+      <router-link to="/add_certificate">Add Certificate</router-link>|
+      <router-link to="/revoke_certificate">Revoke Certificate</router-link>
     </div>
     <router-view :hellomsg="msg"></router-view>
   </div>
 </template>
 
 <script>
-
 export default {
-  name: 'app',
-  data () {
+  name: "app",
+  data() {
     return {
-      msg: 'Welcome to your Vue.js powered Spring Boot App'
-    }
-  }
-}
+      msg: "Welcome to your Vue.js powered Spring Boot App",
+    };
+  },
+};
 </script>
 
 <style lang="scss">
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -38,7 +39,7 @@ export default {
     font-weight: bold;
     color: #2c3e50;
     &.router-link-exact-active {
-     color: #42b983;
+      color: #42b983;
     }
   }
 }
