@@ -32,4 +32,17 @@ export default {
   revokeCertificate(aliasIssuer, aliasCertificate) {
     return AXIOS.get(`/certificates/revoke/${aliasIssuer}/${aliasCertificate}`);
   },
+  issueRoot(email_issuer, email_subject) {
+    return AXIOS.post(`/certificates/issue/${email_issuer}/${email_subject}`);
+  },
+  issueIntermediate(email_issuer, email_subject) {
+    return AXIOS.post(
+      `/certificates/issue/intermediate/${email_issuer}/${email_subject}`
+    );
+  },
+  issueEndEntity(email_issuer, email_subject) {
+    return AXIOS.post(
+      `/certificates/issue/endentity/${email_issuer}/${email_subject}`
+    );
+  },
 };
