@@ -71,6 +71,9 @@ public class CertificateService implements ICertificateService {
         X509CRLUtil util = X509CRLUtil.getInstance();
         Reader reader = new Reader();
         X509Certificate x509Certificate = (X509Certificate) reader.readX509Certificate("keystore/intermediate.jks","password",certificateAlias);
+        if(x509Certificate == null){
+            x509Certificate = (X509Certificate) reader.readX509Certificate("keystore/endentity.jks","password",certificateAlias);
+        }
         util.createUpdate(null, issuerEmail);
         X509CRL crl = util.revokeCertificate(x509Certificate);
         Set<? extends X509CRLEntry> set = crl.getRevokedCertificates();

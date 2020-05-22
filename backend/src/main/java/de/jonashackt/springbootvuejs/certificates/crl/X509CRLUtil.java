@@ -60,6 +60,9 @@ public class X509CRLUtil {
         else{
             certificateWrapper = reader.readCertificate("keystore/root.jks",issuer,"password".toCharArray(),"milutin".toCharArray());
         }
+        System.out.println(issuer);
+        System.out.println(certificateWrapper);
+
         X509Certificate certificate = certificateWrapper.getCertificate();
         X500Name x500name = new JcaX509CertificateHolder(certificate).getSubject();
         x509v2CRLBuilder = new X509v2CRLBuilder(x500name,new Date());
